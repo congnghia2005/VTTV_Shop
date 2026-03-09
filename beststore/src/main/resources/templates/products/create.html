@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Thêm Sản Phẩm Mới</title>
+    <!-- Nhúng Bootstrap để có giao diện đẹp như ảnh mẫu -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto rounded border p-4 m-4 shadow-sm" style="background-color: #f8f9fa;">
+            <h2 class="text-center mb-5">Thêm Sản Phẩm Mới</h2>
+
+            <!-- Form gửi dữ liệu sang Controller -->
+            <!-- enctype="multipart/form-data" là bắt buộc để gửi file ảnh -->
+            <form method="post" enctype="multipart/form-data" th:object="${productDto}">
+
+                <!-- 1. Tên Sản Phẩm -->
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Tên Sản Phẩm</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" th:field="*{name}">
+                        <!-- Hiển thị lỗi nếu có -->
+                        <p th:if="${#fields.hasErrors('name')}" th:errorclass="text-danger" th:errors="*{name}"></p>
+                    </div>
+                </div>
+
+                <!-- 2. Thương Hiệu -->
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Thương Hiệu</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" th:field="*{brand}">
+                        <p th:if="${#fields.hasErrors('brand')}" th:errorclass="text-danger" th:errors="*{brand}"></p>
+                    </div>
+                </div>
+
+                <!-- 3. Giá Tiền -->
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Giá Tiền</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="number" step="1000" min="0" th:field="*{price}">
+                        <p th:if="${#fields.hasErrors('price')}" th:errorclass="text-danger" th:errors="*{price}"></p>
+                    </div>
+                </div>
+
+                <!-- 4. Số Lượng Tồn Kho -->
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Số Lượng</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="number" min="0" th:field="*{quantity}">
+                        <p th:if="${#fields.hasErrors('quantity')}" th:errorclass="text-danger" th:errors="*{quantity}"></p>
+                    </div>
+                </div>
+
+                <!-- 5. Kích Cỡ -->
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Kích Cỡ</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" th:field="*{sizes}">
+                        <p th:if="${#fields.hasErrors('sizes')}" th:errorclass="text-danger" th:errors="*{sizes}"></p>
+                    </div>
+                </div>
+
+                <!-- 6. Màu Sắc -->
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Màu Sắc</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" th:field="*{colors}">
+                        <p th:if="${#fields.hasErrors('colors')}" th:errorclass="text-danger" th:errors="*{colors}"></p>
+                    </div>
+                </div>
+
+                <!-- 7. Mô Tả -->
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Mô Tả</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
+                        <p th:if="${#fields.hasErrors('description')}" th:errorclass="text-danger" th:errors="*{description}"></p>
+                    </div>
+                </div>
+
+                <!-- 8. Hình Ảnh -->
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Hình Ảnh</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="file" th:field="*{imageFile}">
+                        <p th:if="${#fields.hasErrors('imageFile')}" th:errorclass="text-danger" th:errors="*{imageFile}"></p>
+                    </div>
+                </div>
+
+                <!-- Nút Bấm -->
+                <div class="row">
+                    <div class="offset-sm-4 col-sm-4 d-grid">
+                        <button type="submit" class="btn btn-primary">Lưu Sản Phẩm</button>
+                    </div>
+                    <div class="col-sm-4 d-grid">
+                        <a class="btn btn-outline-primary" href="/products" role="button">Hủy Bỏ</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

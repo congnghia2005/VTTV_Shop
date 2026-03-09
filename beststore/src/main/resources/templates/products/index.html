@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Danh Sách Sản Phẩm</title>
+    <!-- Nhúng Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table img {
+            border-radius: 5px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+        }
+        .desc-cell {
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid p-4">
+    <h1 class="text-center mb-4">Quản Lý Sản Phẩm</h1>
+
+    <div class="d-flex justify-content-between mb-3">
+        <a class="btn btn-primary" href="/products/create">
+            <i class="bi bi-plus-circle"></i> + Thêm Sản Phẩm Mới
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover align-middle">
+            <thead class="table-dark text-center text-nowrap">
+            <tr>
+                <th>ID</th>
+                <th>Hình Ảnh</th>
+                <th>Tên Sản Phẩm</th>
+                <th>Thương Hiệu</th>
+                <th>Giá Tiền</th>
+                <th>Kho</th>
+                <th>Kích Cỡ</th>
+                <th>Màu Sắc</th>
+                <th>Mô Tả</th>
+                <th>Thao Tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.id}" class="text-center fw-bold"></td>
+                <td class="text-center">
+                    <img th:src="@{'/images/' + ${product.image}}"
+                    alt ="..." width="100px">
+                </td>
+                <td th:text="${product.name}" class="fw-bold text-primary"></td>
+                <td th:text="${product.brand}" class="text-center"></td>
+                <td th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' đ'"
+                    class="text-danger fw-bold text-end"></td>
+                <td th:text="${product.quantity}" class="text-center"></td>
+                <td>
+                    <span th:text="${product.sizes}" class="badge bg-secondary"></span>
+                </td>
+                <td>
+                    <span th:text="${product.colors}" class="badge bg-info text-dark"></span>
+                </td>
+                <td class="desc-cell" th:title="${product.description}" th:text="${product.description}"></td>
+                <td class="text-center text-nowrap">
+                    <a class="btn btn-warning btn-sm me-1"
+                       th:href="@{/products/edit(id=${product.id})}">Sửa</a>
+                    <a class="btn btn-danger btn-sm"
+                       th:href="@{/products/delete(id=${product.id})}"
+                       onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')">Xóa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Nhúng JS Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
